@@ -1,0 +1,6 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Creates an EC2 Instance for MongoDB
+Resources:
+  MongoDBEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:

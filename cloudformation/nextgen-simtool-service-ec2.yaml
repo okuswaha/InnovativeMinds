@@ -1,0 +1,6 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: EC2 Instance for Rest Service
+Resources:
+  EC2InstanceForRestService:
+    Type: AWS::EC2::Instance
+    Properties:
