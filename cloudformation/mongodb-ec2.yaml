@@ -4,3 +4,21 @@ Resources:
   MongoDBEC2Instance:
     Type: AWS::EC2::Instance
     Properties:
+      KeyName: 'codeathon'
+      InstanceType: 't2.micro'
+      SecurityGroups:
+        - !Ref MongoDBSecurityGroup
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs:
+            VolumeSize: 8
+  MongoDBSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      VpcId: !Ref VpcId
+      GroupDescription: Allow traffic for MongoDB
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0
+          FromPort: 27017
+          IpProtocol: tcp
+          ToPort: 27017
