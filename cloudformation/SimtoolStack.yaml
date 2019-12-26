@@ -1,0 +1,36 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: simtool stack
+
+Parameters:
+  VpcId:
+    Description: "vpcid to be deployed to"
+    Type: String
+  ImageId:
+    Description: "ImageId to be deployed to"
+    Type: String
+
+Resources:
+  MongoDB:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: "https://s3.amazonaws.com/okuswaha/cloudformation/mongodb-ec2.yaml"
+      Parameters:
+        VpcId: !Ref VpcId
+        ImageId: !Ref ImageId
+  SimtoolService:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: "https://s3.amazonaws.com/okuswaha/cloudformation/nextgen-simtool-service-ec2.yaml"
+      Parameters:
+        VpcId: !Ref VpcId
+        ImageId: !Ref ImageId
+  SimtoolUI:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: "https://s3.amazonaws.com/okuswaha/cloudformation/nextgen-simtool-ui-ec2.yaml"
+      Parameters:
+        VpcId: !Ref VpcId
+        ImageId: !Ref ImageId
+
+
+
