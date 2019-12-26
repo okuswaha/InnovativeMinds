@@ -4,18 +4,26 @@ Resources:
   MongoDBEC2Instance:
     Type: AWS::EC2::Instance
     Properties:
-      KeyName: 'codeathon'
-      InstanceType: 't2.micro'
-      SecurityGroups:
+      ImageId: ami-0dacb0c129b49f529
+      KeyName: codeathon
+      InstanceType: t2.micro
+      SecurityGroupIds:
         - !Ref MongoDBSecurityGroup
       BlockDeviceMappings:
         - DeviceName: /dev/sda1
           Ebs:
             VolumeSize: 8
+      UserData:
+        Fn::Base64: !Sub |
+          sudo yum update -y
+          sudo yum install -y docker
+          sudo service docker start
+          sudo docker run -d -p 27017:27017 mongo:latest
+
   MongoDBSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      VpcId: !Ref VpcId
+      VpcId: vpc-3fc63654
       GroupDescription: Allow traffic for MongoDB
       SecurityGroupIngress:
         - CidrIp: 0.0.0.0/0

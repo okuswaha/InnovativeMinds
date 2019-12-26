@@ -4,15 +4,25 @@ Resources:
   UIEC2Instance:
     Type: AWS::EC2::Instance
     Properties:
-      ImageId: !FindInMap [ AWSRegionArch2AMI, !Ref 'AWS::Region', !FindInMap [ AWSInstanceType2Arch, !Ref InstanceType, Arch]]
-      KeyName: 'codeathon'
-      InstanceType: 't2.micro'
+      ImageId: ami-0dacb0c129b49f529
+      KeyName: codeathon
+      InstanceType: t2.micro
       SecurityGroups:
         - !Ref WebServerSecurityGroup
       BlockDeviceMappings:
         - DeviceName: /dev/sda1
           Ebs:
             VolumeSize: 8
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo yum update -y
+          sudo yum install -y git
+          git checkout https://github.com/okuswaha/nextgen-simtool-ui.git
+          sudo yum install -y docker
+          sudo service docker start
+          docker run -v /home/ec2-user/nextgen-simtool-ui/nextgen-simtool-ui:/app -v /app/node_modules -p 4200:4200 --rm okuswaha/nextgen-simtool-ui:1.0
+
   WebServerSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
