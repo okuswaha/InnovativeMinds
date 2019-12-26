@@ -1,5 +1,13 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: EC2 Instance for Simtool UI
+Parameters:
+  VpcId:
+    Description: "vpcid to be deployed to"
+    Type: String
+  ImageId:
+    Description: "ImageId to be deployed to"
+    Type: String
+
 Resources:
   UIEC2Instance:
     Type: AWS::EC2::Instance
@@ -27,10 +35,25 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       VpcId: !Ref VpcId
-      GroupDescription: Enable HTTP access via user defined port\
+      GroupDescription: Enable HTTP access via user defined port
       SecurityGroupIngress:
         - CidrIp: 0.0.0.0/0
           FromPort: 80
           IpProtocol: tcp
           ToPort: 80
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+
+Outputs:
+  InstanceId:
+    Type: String
+    Value: !Ref UIEC2Instance
+  AZ:
+    Value: !GetAtt [ UIEC2Instance, AvailabilityZone]
+  val2:
+    Value: !GetAtt [ UIEC2Instance, PublicDnsName]
+  val3:
+    Value: !GetAtt [ UIEC2Instance, PublicIp]
 

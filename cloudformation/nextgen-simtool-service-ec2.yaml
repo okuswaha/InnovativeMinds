@@ -1,10 +1,18 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: EC2 Instance for Rest Service
+Parameters:
+  VpcId:
+    Description: "vpcid to be deployed to"
+    Type: String
+  ImageId:
+    Description: "ImageId to be deployed to"
+    Type: String
+
 Resources:
   EC2InstanceForRestService:
     Type: AWS::EC2::Instance
     Properties:
-      ImageId: ami-0dacb0c129b49f529
+      ImageId: !Ref ImageId
       KeyName: codeathon
       InstanceType: t2.micro
       SecurityGroups:
@@ -25,9 +33,24 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       VpcId: !Ref VpcId
-      GroupDescription: Enable HTTP access via user defined port\
+      GroupDescription: Enable HTTP access via user defined port
       SecurityGroupIngress:
         - CidrIp: 0.0.0.0/0
           FromPort: 80
           IpProtocol: tcp
           ToPort: 80
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+
+Outputs:
+  InstanceId:
+    Type: String
+    Value: !Ref EC2InstanceForRestService
+  AZ:
+    Value: !GetAtt [ EC2InstanceForRestService, AvailabilityZone]
+  val2:
+    Value: !GetAtt [ EC2InstanceForRestService, PublicDnsName]
+  val3:
+    Value: !GetAtt [ EC2InstanceForRestService, PublicIp]

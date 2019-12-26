@@ -1,10 +1,18 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Creates an EC2 Instance for MongoDB
+Parameters:
+  VpcId:
+    Description: "vpcid to be deployed to"
+    Type: String
+  ImageId:
+    Description: "ImageId to be deployed to"
+    Type: String
+
 Resources:
   MongoDBEC2Instance:
     Type: AWS::EC2::Instance
     Properties:
-      ImageId: ami-0dacb0c129b49f529
+      ImageId: !Ref ImageId
       KeyName: codeathon
       InstanceType: t2.micro
       SecurityGroupIds:
@@ -30,3 +38,18 @@ Resources:
           FromPort: 27017
           IpProtocol: tcp
           ToPort: 27017
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+
+Outputs:
+  InstanceId:
+    Type: String
+    Value: !Ref MongoDBEC2Instance
+  AZ:
+    Value: !GetAtt [ MongoDBEC2Instance, AvailabilityZone]
+  val2:
+    Value: !GetAtt [ MongoDBEC2Instance, PublicDnsName]
+  val3:
+    Value: !GetAtt [ MongoDBEC2Instance, PublicIp]
