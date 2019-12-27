@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Project Build') {
+            steps {
+                echo 'Building'
+                sh 'mvn clean install'
+            }
+        }
+        stage('Docker Build') {
+            steps {
+                echo 'Building Docker image..'
+                sh 'docker build -t "okuswaha/nextgen-simtool-service:1.0" .'
+            }
+        }
+        stage('Docker Push') {
+            steps {
+                echo 'Pushing image to Docker'
+                sh 'docker push "okuswaha/nextgen-simtool-service:1.0"'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying'
+                sh 'aws cloudformation create-stack --stack-name simtoolStack --template-url https://s3.amazonaws.com/okuswaha/cloudformation/SimtoolStack.yaml
+                     --parameters ParameterKey=VpcId,ParameterValue=vpc-sah5sdds98787abc ParameterKey=ImageId,ParameterValue=ami-0dacb0c129b49f529 '
+            }
+        }
+    }
+}
