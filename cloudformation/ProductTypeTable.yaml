@@ -1,0 +1,26 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description:
+Resources:
+  ProductTypeTable:
+    Type: "AWS::DynamoDB::Table"
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: "ProductId"
+          AttributeType: "S"
+        - AttributeName: "ProductName"
+          AttributeType: "S"
+        - AttributeName: "ProductDesc"
+          AttributeType: "S"
+      TableName: "Products"
+      KeySchema:
+        -  AttributeName: "ProductId"
+           KeyType: "HASH"
+      ProvisionedThroughput:
+        ReadCapacityUnits: "5"
+        WriteCapacityUnits: "5"
+
+Outputs:
+  ProductTypeTableId:
+    Type: String
+    Value: !Ref ProductTypeTable
+
