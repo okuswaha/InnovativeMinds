@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description:
+Description: "Table to store product types"
 Resources:
   ProductTypeTable:
     Type: "AWS::DynamoDB::Table"
@@ -7,11 +7,7 @@ Resources:
       AttributeDefinitions:
         - AttributeName: "ProductId"
           AttributeType: "S"
-        - AttributeName: "ProductName"
-          AttributeType: "S"
-        - AttributeName: "ProductDesc"
-          AttributeType: "S"
-      TableName: "Products"
+      TableName: "ProductType"
       KeySchema:
         -  AttributeName: "ProductId"
            KeyType: "HASH"
@@ -21,6 +17,5 @@ Resources:
 
 Outputs:
   ProductTypeTableId:
-    Type: String
     Value: !Ref ProductTypeTable
 

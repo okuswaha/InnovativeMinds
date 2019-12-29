@@ -1,0 +1,1 @@
+aws s3 sync ../cloudformation s3://okuswaha/cloudformation
