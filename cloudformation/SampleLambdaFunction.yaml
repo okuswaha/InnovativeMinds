@@ -1,0 +1,20 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "A Sample Lambda Function"
+Resources:
+  SampleLambdaFunction:
+    Type: "AWS::Lambda::Function"
+    Properties:
+      Code:
+        S3Bucket: "okuswaha"
+        S3key: "artifacts/LambdaDemo-1.0-SNAPSHOT.jar"
+      FunctionName: "SampleLambdaFunction"
+      Handler: "com.codeathon.lambda.handler.LambdaHandler::handleRequest"
+      MemorySize: 128
+      Role: "arn:aws:iam::874311170169:role/service-role/getProducts-role-x4os8ki7"
+      Runtime: java8
+      Description: "Sample Lambda function"
+
+Outputs:
+  SampleLambdaFunction:
+    Value: !Ref SampleLambdaFunction
+    Description: "Lambda Function created"

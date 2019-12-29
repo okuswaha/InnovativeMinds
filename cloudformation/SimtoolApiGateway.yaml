@@ -1,0 +1,79 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "Api Gateway for simtool"
+Resources:
+  SimtoolRestApi:
+    Type: "AWS::ApiGateway::RestApi"
+    Properties:
+      Name: "Simtool"
+      Description: "New Rest Service for simtool"
+      FailOnWarnings: true
+
+  ProductTypeResource:
+    Type: "AWS::ApiGateway::Resource"
+    Properties:
+      ParentId: !GetAtt ["SimtoolRestApi", "RootResourceId"]
+      PathPart: "product"
+      RestApiId: !Ref SimtoolRestApi
+  ProductTypeGET:
+    Type: "AWS::ApiGateway::Method"
+    Properties:
+      HttpMethod: "GET"
+      RestApiId: !Ref SimtoolRestApi
+      ResourceId: !Ref ProductTypeResource
+      AuthorizationType: NONE
+      Integration:
+        Type: MOCK
+
+  ConfigParamsResource:
+    Type: "AWS::ApiGateway::Resource"
+    Properties:
+      ParentId: !GetAtt ["SimtoolRestApi", "RootResourceId"]
+      PathPart: "ConfigParams"
+      RestApiId: !Ref SimtoolRestApi
+  ConfigParamsGET:
+    Type: "AWS::ApiGateway::Method"
+    Properties:
+      HttpMethod: "GET"
+      RestApiId: !Ref SimtoolRestApi
+      ResourceId: !Ref ConfigParamsResource
+      AuthorizationType: NONE
+      Integration:
+        Type: MOCK
+  ConfigParamsPOST:
+    Type: "AWS::ApiGateway::Method"
+    Properties:
+      HttpMethod: "POST"
+      RestApiId: !Ref SimtoolRestApi
+      ResourceId: !Ref ConfigParamsResource
+      AuthorizationType: NONE
+      Integration:
+        Type: MOCK
+
+  SimulationDataResource:
+    Type: "AWS::ApiGateway::Resource"
+    Properties:
+      ParentId: !GetAtt ["SimtoolRestApi", "RootResourceId"]
+      PathPart: "SimulationData"
+      RestApiId: !Ref SimtoolRestApi
+  SimulationDataGET:
+    Type: "AWS::ApiGateway::Method"
+    Properties:
+      HttpMethod: "GET"
+      RestApiId: !Ref SimtoolRestApi
+      ResourceId: !Ref SimulationDataResource
+      AuthorizationType: NONE
+      Integration:
+        Type: MOCK
+  SimulationDataPOST:
+    Type: "AWS::ApiGateway::Method"
+    Properties:
+      HttpMethod: "POST"
+      RestApiId: !Ref SimtoolRestApi
+      ResourceId: !Ref SimulationDataResource
+      AuthorizationType: NONE
+      Integration:
+        Type: MOCK
+
+
+
+
