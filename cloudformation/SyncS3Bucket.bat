@@ -1,1 +1,1 @@
-aws s3 sync ../cloudformation s3://okuswaha/cloudformation
+aws s3 sync ../cloudformation s3://simtool/cloudformation

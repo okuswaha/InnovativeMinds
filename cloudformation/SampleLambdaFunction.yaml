@@ -5,8 +5,8 @@ Resources:
     Type: "AWS::Lambda::Function"
     Properties:
       Code:
-        S3Bucket: "okuswaha"
-        S3key: "artifacts/LambdaDemo-1.0-SNAPSHOT.jar"
+        S3Bucket: "simtool"
+        S3Key: "artifacts/LambdaDemo-1.0-SNAPSHOT.jar"
       FunctionName: "SampleLambdaFunction"
       Handler: "com.codeathon.lambda.handler.LambdaHandler::handleRequest"
       MemorySize: 128
